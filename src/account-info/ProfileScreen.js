@@ -1,6 +1,6 @@
 /* @flow strict-local */
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, Alert } from 'react-native';
 
 import type { RouteProp } from '../react-navigation';
 import type { MainTabsNavigationProp } from '../main/MainTabsScreen';
@@ -63,8 +63,25 @@ function LogoutButton(props: {||}) {
       secondary
       text="Log out"
       onPress={() => {
-        dispatch(tryStopNotifications());
-        dispatch(logout());
+        Alert.alert(
+          'Log out',
+          'Do you want to Log out ?',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => {},
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => {
+                dispatch(tryStopNotifications());
+                dispatch(logout());
+              },
+            },
+          ],
+          { cancelable: true },
+        );
       }}
     />
   );
